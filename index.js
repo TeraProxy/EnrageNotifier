@@ -1,15 +1,25 @@
 module.exports = function EnrageNotifier(dispatch) {
-    let hpMax
-    let hpCurrent
-    let hpPercent
-    let nextEnrage
-    let enabled = false
-    let wasEnraged = 0
-    let bosses = new Set()
+    let cid = null,
+		player = '',
+		hpMax,
+		hpCurrent,
+		hpPercent,
+		nextEnrage,
+		enabled = false,
+		inHH = false,
+		wasEnraged = 0,
+		bosses = new Set()
 
     dispatch.hook('S_LOGIN', 1, (event) => {
+		({cid} = event)
+		player = event.name
 		enabled = true
     })
+	
+	dispatch.hook('S_LOAD_TOPO', 1, event => {
+		if(event.zone == 9950) inHH = true
+		else inHH = false
+	})
 
     dispatch.hook('S_BOSS_GAGE_INFO', 1, (event) => {
         bosses.add("" + event.id)
@@ -20,7 +30,7 @@ module.exports = function EnrageNotifier(dispatch) {
     })
 
     dispatch.hook('S_NPC_STATUS', 1, (event) => {
-		if(!enabled) return
+		if(!enabled || inHH) return
         if(!(bosses.has("" + event.creature))) return
 
         if((event.enraged == 0) && (wasEnraged == 1)) {
@@ -32,12 +42,7 @@ module.exports = function EnrageNotifier(dispatch) {
         if((event.enraged == 1) && (wasEnraged == 0)) {
             wasEnraged = 1
 
-            notify('<font color="#DC143C">Boss Enraged!</font>')          
-
-            /*setTimeout(function() {
-                if(!(bosses.has("" + event.creature))) return
-                notify('<font color="#FFFFFF">Enrage wearing off in 10 seconds</font>')
-			}, 26000)*/
+            notify('<font color="#DC143C">Boss Enraged!</font>')
         }
     })
 
@@ -45,33 +50,40 @@ module.exports = function EnrageNotifier(dispatch) {
 		if(bosses.delete("" + event.target)) wasEnraged = 0
     })
 	
+	// ################# //
+	// ### Chat Hook ### //
+	// ################# //
+	
 	dispatch.hook('C_WHISPER', 1, (event) => {
-		if (/^<FONT>!enragenotifier?<\/FONT>$/i.test(event.message)) {
-			if (!enabled) {
+		if(event.target.toUpperCase() === "!enragenotifier".toUpperCase()) {
+			if (/^<FONT>on?<\/FONT>$/i.test(event.message)) {
 				enabled = true
-				message('EnrageNotifier <font color="#00EE00">enabled</font>. Whisper "!enragenotifier" to disable.')
+				message('Enrage Notifier <font color="#00EE00">enabled</font>.')
 			}
-			else {
+			else if (/^<FONT>off?<\/FONT>$/i.test(event.message)) {
 				enabled = false
-				message('EnrageNotifier <font color="#DC143C">disabled</font>. Whisper "!enragenotifier" to enable.')
+				message('Enrage Notifier <font color="#DC143C">disabled</font>.')
 			}
+			else message('Commands: "on" (enable Enrage Notifier),'
+								+ ' "off" (disable Enrage Notifier)'
+						)
 			return false
 		}
 	})
-  
+	
 	function message(msg) {
-		dispatch.toClient('S_CHAT', 1, {
-			channel: 24,
-			authorID: 0,
+		dispatch.toClient('S_WHISPER', 1, {
+			player: cid,
 			unk1: 0,
 			gm: 0,
 			unk2: 0,
-			authorName: '',
+			author: '!EnrageNotifier',
+			recipient: player,
 			message: msg
 		})
 	}
 	
-	function notify(msg) {
+	/*function notify(msg) {
 		dispatch.toClient('S_CHAT', 1, {
 			channel: 21, // Notice
 			authorID: 0,
@@ -81,5 +93,14 @@ module.exports = function EnrageNotifier(dispatch) {
 			authorName: '',
 			message: msg
 		})
+	}*/
+	
+	function notify(msg) {
+		dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 1, {
+            unk1: 31, // 42 Blue Shiny Text, 31 Normal Orange Text, 2 Normal Text any color?
+            unk2: 0,
+            unk3: 27, // 27
+            message: msg
+        })
 	}
 }
