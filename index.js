@@ -35,14 +35,17 @@ module.exports = function EnrageNotifier(dispatch) {
 
         if((event.enraged == 0) && (wasEnraged == 1)) {
             wasEnraged = 0
-            let messageString = '<font color="#FFFFFF">Next Enrage at </font><font color="#DC143C">' + nextEnrage + '%</font>'
-            if(nextEnrage > 0) notify(messageString)
+            let messageString = '<font color="#FFFFFF" size="50">Next Enrage at </font><font color="#FF0000" size="60">' + nextEnrage + '%</font>'
+            if(nextEnrage > 0) {
+				notify(messageString)
+				notifyChat(messageString)
+			}
         }
 
         if((event.enraged == 1) && (wasEnraged == 0)) {
             wasEnraged = 1
 
-            notify('<font color="#DC143C">Boss Enraged!</font>')
+            notify('<font color="#FF0000" size="50">Boss Enraged!</font>')
         }
     })
 
@@ -58,13 +61,14 @@ module.exports = function EnrageNotifier(dispatch) {
 		if(event.target.toUpperCase() === "!enragenotifier".toUpperCase()) {
 			if (/^<FONT>on?<\/FONT>$/i.test(event.message)) {
 				enabled = true
-				message('Enrage Notifier <font color="#00EE00">enabled</font>.')
+				message('Enrage Notifier <font color="#56B4E9">enabled</font>.')
 			}
 			else if (/^<FONT>off?<\/FONT>$/i.test(event.message)) {
 				enabled = false
-				message('Enrage Notifier <font color="#DC143C">disabled</font>.')
+				message('Enrage Notifier <font color="#E69F00">disabled</font>.')
 			}
-			else message('Commands: "on" (enable Enrage Notifier),'
+			else message('Commands:<br>'
+								+ ' "on" (enable Enrage Notifier),<br>'
 								+ ' "off" (disable Enrage Notifier)'
 						)
 			return false
@@ -83,24 +87,40 @@ module.exports = function EnrageNotifier(dispatch) {
 		})
 	}
 	
-	/*function notify(msg) {
+	dispatch.hook('C_CHAT', 1, event => {
+		if(/^<FONT>!enrage<\/FONT>$/i.test(event.message)) {
+			if(!enabled) {
+				enabled = true
+				message('Enrage Notifier <font color="#56B4E9">enabled</font>.')
+				console.log('Enrage Notifier enabled.')
+			}
+			else {
+				enabled = false
+				message('Enrage Notifier <font color="#E69F00">disabled</font>.')
+				console.log('Enrage Notifier disabled.')
+			}
+			return false
+		}
+	})
+	
+	function notify(msg) {
+		dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 1, {
+            unk1: 42, // 42 Blue Shiny Text, 31 Normal Orange Text, 2 Normal Text any color?
+            unk2: 0,
+            unk3: 27, // 27
+            message: msg
+        })
+	}
+	
+	function notifyChat(msg) {
 		dispatch.toClient('S_CHAT', 1, {
-			channel: 21, // Notice
+			channel: 213, // Say
 			authorID: 0,
 			unk1: 0,
 			gm: 0,
 			unk2: 0,
 			authorName: '',
-			message: msg
+			message: ' ' + msg
 		})
-	}*/
-	
-	function notify(msg) {
-		dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 1, {
-            unk1: 31, // 42 Blue Shiny Text, 31 Normal Orange Text, 2 Normal Text any color?
-            unk2: 0,
-            unk3: 27, // 27
-            message: msg
-        })
 	}
 }
