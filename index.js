@@ -1,24 +1,18 @@
+const Command = require('command')
+
 module.exports = function EnrageNotifier(dispatch) {
-    let cid = null,
-		player = '',
-		hpMax,
+    let hpMax,
 		hpCurrent,
 		hpPercent,
 		nextEnrage,
-		enabled = false,
+		enabled = true,
 		inHH = false,
 		wasEnraged = 0,
-		bosses = new Set()
-
-    dispatch.hook('S_LOGIN', 1, (event) => {
-		({cid} = event)
-		player = event.name
-		enabled = true
-    })
+		bosses = new Set(),
+		alert = true // if true, shows an additional alert in the middle of your screen
 	
 	dispatch.hook('S_LOAD_TOPO', 1, event => {
-		if(event.zone == 9950) inHH = true
-		else inHH = false
+		inHH = event.zone == 9950
 	})
 
     dispatch.hook('S_BOSS_GAGE_INFO', 1, (event) => {
@@ -37,15 +31,14 @@ module.exports = function EnrageNotifier(dispatch) {
             wasEnraged = 0
             let messageString = '<font color="#FFFFFF" size="50">Next Enrage at </font><font color="#FF0000" size="60">' + nextEnrage + '%</font>'
             if(nextEnrage > 0) {
-				notify(messageString)
+				if(alert) notify(messageString)
 				notifyChat(messageString)
 			}
         }
 
         if((event.enraged == 1) && (wasEnraged == 0)) {
             wasEnraged = 1
-
-            notify('<font color="#FF0000" size="50">Boss Enraged!</font>')
+            if(alert) notify('<font color="#FF0000" size="50">Boss Enraged!</font>')
         }
     })
 
@@ -53,74 +46,38 @@ module.exports = function EnrageNotifier(dispatch) {
 		if(bosses.delete("" + event.target)) wasEnraged = 0
     })
 	
-	// ################# //
-	// ### Chat Hook ### //
-	// ################# //
-	
-	dispatch.hook('C_WHISPER', 1, (event) => {
-		if(event.target.toUpperCase() === "!enragenotifier".toUpperCase()) {
-			if (/^<FONT>on?<\/FONT>$/i.test(event.message)) {
-				enabled = true
-				message('Enrage Notifier <font color="#56B4E9">enabled</font>.')
-			}
-			else if (/^<FONT>off?<\/FONT>$/i.test(event.message)) {
-				enabled = false
-				message('Enrage Notifier <font color="#E69F00">disabled</font>.')
-			}
-			else message('Commands:<br>'
-								+ ' "on" (enable Enrage Notifier),<br>'
-								+ ' "off" (disable Enrage Notifier)'
-						)
-			return false
-		}
-	})
-	
-	function message(msg) {
-		dispatch.toClient('S_WHISPER', 1, {
-			player: cid,
-			unk1: 0,
-			gm: 0,
-			unk2: 0,
-			author: '!EnrageNotifier',
-			recipient: player,
-			message: msg
-		})
-	}
-	
-	dispatch.hook('C_CHAT', 1, event => {
-		if(/^<FONT>!enrage<\/FONT>$/i.test(event.message)) {
-			if(!enabled) {
-				enabled = true
-				message('Enrage Notifier <font color="#56B4E9">enabled</font>.')
-				console.log('Enrage Notifier enabled.')
-			}
-			else {
-				enabled = false
-				message('Enrage Notifier <font color="#E69F00">disabled</font>.')
-				console.log('Enrage Notifier disabled.')
-			}
-			return false
-		}
-	})
-	
 	function notify(msg) {
 		dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 1, {
-            unk1: 42, // 42 Blue Shiny Text, 31 Normal Orange Text, 2 Normal Text any color?
+            unk1: 42, // 42 Blue Shiny Text, 31 Normal Text
             unk2: 0,
-            unk3: 27, // 27
+            unk3: 27,
             message: msg
         })
 	}
 	
 	function notifyChat(msg) {
-		dispatch.toClient('S_CHAT', 1, {
-			channel: 213, // Say
-			authorID: 0,
-			unk1: 0,
-			gm: 0,
-			unk2: 0,
-			authorName: '',
-			message: ' ' + msg
-		})
+		command.message(' ' + msg)
 	}
+	
+	// ################# //
+	// ### Chat Hook ### //
+	// ################# //
+	
+	const command = Command(dispatch)
+	command.add('enrage', (param) => {
+		if(param == null) {
+			enabled = !enabled
+			command.message('[Enrage Notifier] ' + (enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
+			console.log('[Enrage Notifier] ' + (enabled ? 'enabled' : 'disabled'))
+		}
+		else if(param == "alert") {
+			alert = !alert
+			command.message('[Enrage Notifier] alerts ' + (alert ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
+			console.log('[Enrage Notifier] alerts ' + (alert ? 'enabled' : 'disabled'))
+		}
+		else command.message('Commands:<br>'
+							+ ' "enrage" (enable/disable EnrageNotifier),<br>'
+							+ ' "enrage alert" (enable/disable alerts in the center of your screen)'
+			)
+	})
 }
