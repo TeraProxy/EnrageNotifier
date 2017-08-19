@@ -29,7 +29,7 @@ module.exports = function EnrageNotifier(dispatch) {
 
         if((event.enraged == 0) && (wasEnraged == 1)) {
             wasEnraged = 0
-            let messageString = '<font color="#FFFFFF" size="50">Next Enrage at </font><font color="#FF0000" size="60">' + nextEnrage + '%</font>'
+            let messageString = '<font color="#FFFFFF" size="25">Next Enrage at </font><font color="#FF0000" size="30">' + nextEnrage + '%</font>'
             if(nextEnrage > 0) {
 				if(alert) notify(messageString)
 				notifyChat(messageString)
