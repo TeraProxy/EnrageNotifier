@@ -15,7 +15,7 @@ module.exports = function EnrageNotifier(dispatch) {
 		inHH = event.zone == 9950
 	})
 
-    dispatch.hook('S_BOSS_GAGE_INFO', 1, (event) => {
+    dispatch.hook('S_BOSS_GAGE_INFO', 3, (event) => {
         bosses.add("" + event.id)
         hpMax = event.maxHp
         hpCurrent = event.curHp
