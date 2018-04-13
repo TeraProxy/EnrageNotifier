@@ -22,6 +22,8 @@ Any other input, starting with "enrage", will return a summary of above commands
 Whatever you send to the proxy chat in game is intercepted client-side. The chat is NOT sent to the server.  
   
 ## Changelog
+### 1.1.1
+* [*] Updated hook versions for compatibility with the latest Tera-Proxy programs
 ### 1.1.0
 * [+] Added "alert" option and command
 * [*] Full conversion to Pinkie Pie's command module which is now a requirement

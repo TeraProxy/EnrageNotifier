@@ -1,3 +1,5 @@
+// Version 1.1.1
+
 const Command = require('command')
 
 module.exports = function EnrageNotifier(dispatch) {
@@ -9,9 +11,9 @@ module.exports = function EnrageNotifier(dispatch) {
 		inHH = false,
 		wasEnraged = 0,
 		bosses = new Set(),
-		alert = true // if true, shows an additional alert in the middle of your screen
+		alert = false // if true, shows an additional alert in the middle of your screen
 	
-	dispatch.hook('S_LOAD_TOPO', 1, event => {
+	dispatch.hook('S_LOAD_TOPO', 3, event => {
 		inHH = event.zone == 9950
 	})
 
@@ -42,7 +44,7 @@ module.exports = function EnrageNotifier(dispatch) {
         }
     })
 
-    dispatch.hook('S_DESPAWN_NPC', 1, (event) => {
+    dispatch.hook('S_DESPAWN_NPC', 3, (event) => {
 		if(bosses.delete("" + event.target)) wasEnraged = 0
     })
 	
