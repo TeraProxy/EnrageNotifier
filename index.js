@@ -11,7 +11,7 @@ module.exports = function EnrageNotifier(dispatch) {
 		inHH = false,
 		wasEnraged = 0,
 		bosses = new Set(),
-		alert = false // if true, shows an additional alert in the middle of your screen
+		alert = true // if true, shows an additional alert in the middle of your screen
 	
 	dispatch.hook('S_LOAD_TOPO', 3, event => {
 		inHH = event.zone == 9950
