@@ -1,20 +1,18 @@
-// Version 1.1.2
+// Version 1.1.3
 
 const Command = require('command'),
 	GameState = require('tera-game-state'),
 	CENTER_ALERT = require('./config.json').CENTER_ALERT // if true, shows an additional alert in the middle of your screen (streamers should turn this off)
 
-module.exports = function enragenotifier(dispatch) {
+module.exports = function EnrageNotifier(dispatch) {
 	const command = Command(dispatch),
 		game = GameState(dispatch)
 
-	let hpMax,
-		hpCurrent,
-		hpPercent,
+	let hpPercent,
 		nextEnrage,
 		enabled = true,
 		inHH = false,
-		wasEnraged = 0,
+		wasEnraged = false,
 		bosses = new Set()
 
 	// ############# //
@@ -22,38 +20,34 @@ module.exports = function enragenotifier(dispatch) {
 	// ############# //
 
 	game.me.on('change_zone', (zone, quick) => {
-		inHH = zone == 9950
+		inHH = zone === 9950
 	})
 
-	dispatch.hook('S_BOSS_GAGE_INFO', 3, (event) => {
-		bosses.add("" + event.id) // work with strings so there's no chance JS screws up
-		hpMax = event.maxHp
-		hpCurrent = event.curHp
-		hpPercent = Math.floor(hpCurrent / hpMax * 100)
+	dispatch.hook('S_BOSS_GAGE_INFO', 3, event => {
+		bosses.add(event.id.toString()) // work with strings so there's no chance JS screws up
+		hpPercent = Math.floor(event.curHp.toNumber() / event.maxHp.toNumber() * 100)
 		nextEnrage = (hpPercent > 10) ? (hpPercent - 10) : 0
 	})
 
-	dispatch.hook('S_NPC_STATUS', 1, (event) => {
+	dispatch.hook('S_NPC_STATUS', 1, event => {
 		if(!enabled || inHH) return
-		if(!(bosses.has("" + event.creature))) return
+		if(!bosses.has(event.creature.toString())) return
 
-		if(event.enraged == 0 && wasEnraged == 1) {
-			wasEnraged = 0
-			let messageString = '<font color="#FFFFFF" size="25">Next Enrage at </font><font color="#FF0000" size="30">' + nextEnrage + '%</font>'
-			if(nextEnrage > 0) {
-				if(CENTER_ALERT) notify(messageString)
-				notifyChat(messageString)
+		if(event.enraged != wasEnraged) {
+			if(wasEnraged) {
+				let messageString = '<font color="#FFFFFF" size="25">Next Enrage at </font><font color="#FF0000" size="30">' + nextEnrage + '%</font>'
+				if(nextEnrage > 0) {
+					if(CENTER_ALERT) notify(messageString)
+					notifyChat(messageString)
+				}
 			}
-		}
-
-		if(event.enraged == 1 && wasEnraged == 0) {
-			wasEnraged = 1
-			if(CENTER_ALERT) notify('<font color="#FF0000" size="50">Boss Enraged!</font>')
+			else if(CENTER_ALERT) notify('<font color="#FF0000" size="50">Boss Enraged!</font>')
+			wasEnraged = !wasEnraged
 		}
 	})
 
-	dispatch.hook('S_DESPAWN_NPC', 3, (event) => {
-		if(bosses.delete("" + event.target)) wasEnraged = 0
+	dispatch.hook('S_DESPAWN_NPC', 3, event => {
+		if(bosses.delete(event.gameId.toString())) wasEnraged = false
 	})
 
 	// ################# //
@@ -70,23 +64,23 @@ module.exports = function enragenotifier(dispatch) {
 	}
 
 	function notifyChat(msg) {
-		command.message(' ' + msg)
+		command.message(msg)
 	}
 
 	// ################ //
 	// ### Commands ### //
 	// ################ //
 	
-	command.add('enrage', (param) => {
-		if(param == null) {
+	command.add('enrage', (cmd) => {
+		if(cmd) {
 			enabled = !enabled
 			command.message('[Enrage Notifier] ' + (enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
 			console.log('[Enrage Notifier] ' + (enabled ? 'enabled' : 'disabled'))
 		}
-		else if(param == "alert") {
+		else if(cmd === "alert") {
 			CENTER_ALERT = !CENTER_ALERT
-			command.message('[Enrage Notifier] alerts ' + (CENTER_ALERT ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
-			console.log('[Enrage Notifier] alerts ' + (CENTER_ALERT ? 'enabled' : 'disabled'))
+			command.message('[Enrage Notifier] center alerts ' + (CENTER_ALERT ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
+			console.log('[Enrage Notifier] center alerts ' + (CENTER_ALERT ? 'enabled' : 'disabled'))
 		}
 		else command.message('Commands:<br>'
 							+ ' "enrage" (enable/disable EnrageNotifier),<br>'

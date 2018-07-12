@@ -35,6 +35,9 @@ Whatever you send to the proxy chat in game is intercepted client-side. The chat
 ## Changelog
 <details>
 
+### 1.1.3
+* [*] Fixed issues with 64-bit HP and conversions (thx Pinkie!)
+* [*] Slight performance optimization
 ### 1.1.2
 * [+] Rewrote code to use Caali's "tera-game-state" module in order to reduce overhead
 * [+] Now supports auto-updating via Caali's tera-proxy
