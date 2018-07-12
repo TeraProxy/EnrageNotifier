@@ -7,7 +7,9 @@ Should work on all regions as long as the opcodes are mapped but I personally on
 3) Done! (the module will auto-update when a new version is released)
 
 ##### :heavy_exclamation_mark: Installation for PinkiePie's tera-proxy :heavy_exclamation_mark:
+1) Update your tera-data: https://github.com/meishuu/tera-data
 2) Download EnrageNotifier: https://github.com/TeraProxy/EnrageNotifier/archive/master.zip
+3) Download tera-game-state: https://github.com/hackerman-caali/tera-game-state/archive/master.zip
 4) Extract the contents of both zip files into "\tera-proxy\bin\node_modules\"
 5) Done!
 6) Check back here once in a while for updates 
@@ -33,6 +35,9 @@ Whatever you send to the proxy chat in game is intercepted client-side. The chat
 ## Changelog
 <details>
 
+### 1.1.3
+* [*] Fixed issues with 64-bit HP and conversions (thx Pinkie!)
+* [*] Slight performance optimization
 ### 1.1.2
 * [+] Rewrote code to use Caali's "tera-game-state" module in order to reduce overhead
 * [+] Now supports auto-updating via Caali's tera-proxy
