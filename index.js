@@ -1,16 +1,12 @@
 // Version 1.1.2
 
 const Command = require('command'),
-	GameState = require('tera-game-state'),
 	CENTER_ALERT = require('./config.json').CENTER_ALERT // if true, shows an additional alert in the middle of your screen (streamers should turn this off)
 
 module.exports = function enragenotifier(dispatch) {
-	const command = Command(dispatch),
-		game = GameState(dispatch)
+	const command = Command(dispatch)
 
-	let hpMax,
-		hpCurrent,
-		hpPercent,
+	let hpPercent,
 		nextEnrage,
 		enabled = true,
 		inHH = false,
@@ -21,21 +17,17 @@ module.exports = function enragenotifier(dispatch) {
 	// ### Hooks ### //
 	// ############# //
 
-	game.me.on('change_zone', (zone, quick) => {
-		inHH = zone == 9950
-	})
+	dispatch.hook('S_LOAD_TOPO', 3, event => { inHH = event.zone === 9950 })
 
 	dispatch.hook('S_BOSS_GAGE_INFO', 3, (event) => {
-		bosses.add("" + event.id) // work with strings so there's no chance JS screws up
-		hpMax = event.maxHp
-		hpCurrent = event.curHp
-		hpPercent = Math.floor(hpCurrent / hpMax * 100)
+		bosses.add(event.id.toString())
+		hpPercent = Math.floor(event.curHp.toNumber() / event.maxHp.toNumber() * 100)
 		nextEnrage = (hpPercent > 10) ? (hpPercent - 10) : 0
 	})
 
 	dispatch.hook('S_NPC_STATUS', 1, (event) => {
 		if(!enabled || inHH) return
-		if(!(bosses.has("" + event.creature))) return
+		if(!bosses.has(event.creature.toString())) return
 
 		if(event.enraged == 0 && wasEnraged == 1) {
 			wasEnraged = 0
@@ -53,7 +45,7 @@ module.exports = function enragenotifier(dispatch) {
 	})
 
 	dispatch.hook('S_DESPAWN_NPC', 3, (event) => {
-		if(bosses.delete("" + event.target)) wasEnraged = 0
+		if(bosses.delete(event.gameId.toString())) wasEnraged = 0
 	})
 
 	// ################# //
