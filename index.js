@@ -6,9 +6,7 @@ const Command = require('command'),
 module.exports = function enragenotifier(dispatch) {
 	const command = Command(dispatch)
 
-	let hpMax,
-		hpCurrent,
-		hpPercent,
+	let hpPercent,
 		nextEnrage,
 		enabled = true,
 		inHH = false,
