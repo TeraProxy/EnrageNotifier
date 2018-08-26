@@ -1,4 +1,11 @@
 {
+    "disableAutoUpdate": false,
+    "options": {
+        "niceName": "Enrage Notifier",
+        "settingsVersion": 1,
+        "settingsFile": "config.json",
+        "settingsMigrator": "settings_migrator.js"
+    },
     "servers": ["https://raw.githubusercontent.com/TeraProxy/EnrageNotifier/master/"],
     "supportUrl": "https://github.com/TeraProxy/EnrageNotifier/issues"
 }

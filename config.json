@@ -1,3 +1,7 @@
 {
-	"CENTER_ALERT": true
+    "version": 1,
+    "data": {
+        "enabled": true,
+        "CENTER_ALERT": true
+    }
 }

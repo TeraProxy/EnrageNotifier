@@ -1,13 +1,14 @@
 {
 	"files": {
-		"index.js": "e0ad60a719a7f142979dd1e4c787f6bc4a20f100c31df6d909cfca9927d61e51",
 		"LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
-		"README.md": "d81a539d44d102ced217c6efa7ffa9aac8a6ea645e0b78e63e12c5028d29ba15",
-		"module.json": "43a473b8ba0004941a3267aa7dc4edf492cdd90370ef4934ba325494fc99bf1e",
+		"README.md": "2caf27d4c6f535c340e758e04d173d6f715aecf2ae616b1d91bfc49afcc3cf6e",
 		"config.json": {
 			"overwrite": false,
-			"hash": "027ade19ec800dbc1e06c5a933f5d0d76d4f13509669a0f7355ceda9903a41b2"
-		}
+			"hash": "ccfdc21b2872f3304771880eef2d5681d5f14fbe68ee17f92a2c7a69b967e0af"
+		},
+		"index.js": "dc13950e764c8ecd1f5dfc0effa07c42b636e2d5447fabc1b8fc18b5120bab67",
+		"module.json": "ff0bdc8a54012a8f1d9d4a77551d34c61a9c2c8aa627e5744c3a8066a775d275",
+		"settings_migrator.js": "8e55be62f979eb2a5bd340b8f58543bcc9f4e51cd51faca20b60776716c2ed12"
 	},
 	"defs": {
 		"S_BOSS_GAGE_INFO": 3,
