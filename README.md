@@ -1,5 +1,5 @@
 ##### :heavy_exclamation_mark: Status :heavy_exclamation_mark:
-Should work on all regions as long as the opcodes are mapped but I personally only test modules on NA with Caali's tera-proxy: https://discord.gg/maqBmJV  
+Should work on all regions as long as the opcodes are mapped. Thanks to EME's recent unjustified DMCA actions against developers, opcodes for NA are no longer mapped.
 
 ##### :heavy_exclamation_mark: Installation for Caali's tera-proxy :heavy_exclamation_mark:
 1) Download EnrageNotifier: https://github.com/TeraProxy/EnrageNotifier/archive/master.zip
@@ -27,6 +27,8 @@ Whatever you send to the proxy chat in game is intercepted client-side. The chat
 ## Changelog
 <details>
 
+### 1.1.5
+* [~] Definition update
 ### 1.1.4
 * [~] Code changes due to Caali's recent tera-proxy updates
 * [-] Removed support for Pinkie Pie's tera-proxy

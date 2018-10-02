@@ -1,19 +1,19 @@
 {
 	"files": {
 		"LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
-		"README.md": "2caf27d4c6f535c340e758e04d173d6f715aecf2ae616b1d91bfc49afcc3cf6e",
+		"README.md": "d67870c9e6cecad296d2b3d4fd149829a98e1968006527605f780f7d03c102ae",
 		"config.json": {
 			"overwrite": false,
 			"hash": "ccfdc21b2872f3304771880eef2d5681d5f14fbe68ee17f92a2c7a69b967e0af"
 		},
-		"index.js": "dc13950e764c8ecd1f5dfc0effa07c42b636e2d5447fabc1b8fc18b5120bab67",
+		"index.js": "1afc8a81802b7b393c3b0ac07372c58b08c074397c9b7250886a55fa655e7151",
 		"module.json": "ff0bdc8a54012a8f1d9d4a77551d34c61a9c2c8aa627e5744c3a8066a775d275",
 		"settings_migrator.js": "8e55be62f979eb2a5bd340b8f58543bcc9f4e51cd51faca20b60776716c2ed12"
 	},
 	"defs": {
 		"S_BOSS_GAGE_INFO": 3,
 		"S_DESPAWN_NPC": 3,
-		"S_DUNGEON_EVENT_MESSAGE": 1,
+		"S_DUNGEON_EVENT_MESSAGE": 2,
 		"S_NPC_STATUS": 1
 	}
 }

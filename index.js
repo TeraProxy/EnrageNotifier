@@ -1,4 +1,4 @@
-// Version 1.1.4
+// Version 1.1.5
 
 module.exports = function EnrageNotifier(mod) {
 	
@@ -48,10 +48,10 @@ module.exports = function EnrageNotifier(mod) {
 	// ################# //
 
 	function notify(msg) {
-		mod.toClient('S_DUNGEON_EVENT_MESSAGE', 1, {
-			unk1: 42, // 42 Blue Shiny Text, 31 Normal Text
-			unk2: 0,
-			unk3: 27,
+		mod.toClient('S_DUNGEON_EVENT_MESSAGE', 2, {
+			type: 42, // 2,19-23,38-39,41-74,80-81
+			chat: 0, // show in chat
+			channel: 18,
 			message: msg
 		})
 	}
