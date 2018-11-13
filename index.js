@@ -1,7 +1,18 @@
-// Version 1.1.5
+// Version 1.1.6
 
 module.exports = function EnrageNotifier(mod) {
-	
+
+	if(mod.proxyAuthor !== 'caali') {
+		const options = require('./module').options
+		if(options) {
+			const settingsVersion = options.settingsVersion
+			if(settingsVersion) {
+				mod.settings = require('./' + (options.settingsMigrator || 'module_settings_migrator.js'))(mod.settings._version, settingsVersion, mod.settings)
+				mod.settings._version = settingsVersion
+			}
+		}
+	}
+
 	let hpPercent,
 		nextEnrage,
 		inHH = false,
