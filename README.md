@@ -29,6 +29,8 @@ Whatever you send to the proxy chat in game is intercepted client-side. The chat
 ## Changelog
 <details>
 
+### 1.1.7
+* [~] Look and feel will now be the same on Caali's and Pinkie's proxy
 ### 1.1.6
 * [~] Cross compatibility for Caali's and Pinkie's proxy (no more branch)
 ### 1.1.5

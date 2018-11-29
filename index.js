@@ -1,4 +1,4 @@
-// Version 1.1.6
+// Version 1.1.7
 
 module.exports = function EnrageNotifier(mod) {
 
@@ -17,7 +17,8 @@ module.exports = function EnrageNotifier(mod) {
 		nextEnrage,
 		inHH = false,
 		wasEnraged = false,
-		bosses = new Set()
+		bosses = new Set(),
+		niceName = mod.proxyAuthor !== 'caali' ? '[Enrage] ' : ''
 
 	// ############# //
 	// ### Hooks ### //
@@ -68,7 +69,7 @@ module.exports = function EnrageNotifier(mod) {
 	}
 
 	function notifyChat(msg) {
-		mod.command.message(msg)
+		mod.command.message(niceName + msg)
 	}
 
 	// ################ //
@@ -78,16 +79,16 @@ module.exports = function EnrageNotifier(mod) {
 	mod.command.add('enrage', (cmd) => {
 		if(cmd) {
 			mod.settings.enabled = !mod.settings.enabled
-			mod.command.message((mod.settings.enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
-			console.log('[Enrage Notifier] ' + (mod.settings.enabled ? 'enabled' : 'disabled'))
+			mod.command.message(niceName + 'Enrage Notifier ' + (mod.settings.enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
+			console.log('Enrage Notifier ' + (mod.settings.enabled ? 'enabled' : 'disabled'))
 		}
 		else if(cmd === "alert") {
 			mod.settings.CENTER_ALERT = !mod.settings.CENTER_ALERT
-			mod.command.message('center alerts ' + (mod.settings.CENTER_ALERT ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
-			console.log('[Enrage Notifier] center alerts ' + (mod.settings.CENTER_ALERT ? 'enabled' : 'disabled'))
+			mod.command.message(niceName + 'Center alerts ' + (mod.settings.CENTER_ALERT ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
+			console.log('[Enrage] Center alerts ' + (mod.settings.CENTER_ALERT ? 'enabled' : 'disabled'))
 		}
-		else mod.command.message('Commands:<br>'
-							+ ' "enrage" (enable/disable EnrageNotifier),<br>'
+		else mod.command.message('Commands:\n'
+							+ ' "enrage" (enable/disable EnrageNotifier),\n'
 							+ ' "enrage alert" (enable/disable alerts in the center of your screen)'
 			)
 	})

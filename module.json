@@ -1,7 +1,7 @@
 {
     "disableAutoUpdate": false,
     "options": {
-        "niceName": "Enrage Notifier",
+        "niceName": "Enrage",
         "settingsVersion": 1,
         "settingsFile": "config.json",
         "settingsMigrator": "settings_migrator.js"
