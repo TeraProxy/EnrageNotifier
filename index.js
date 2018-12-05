@@ -61,34 +61,34 @@ module.exports = function EnrageNotifier(mod) {
 
 	function notify(msg) {
 		mod.toClient('S_DUNGEON_EVENT_MESSAGE', 2, {
-			type: 42, // 2,19-23,38-39,41-74,80-81
-			chat: 0, // show in chat
+			type: 42, // 2,19-23,38-39,41-74,80-81 42=green 31=green shiny
+			chat: 1, // show in chat
 			channel: 18,
 			message: msg
 		})
 	}
 
 	function notifyChat(msg) {
-		mod.command.message(niceName + msg)
+		mod.command.message(msg)
 	}
 
 	// ################ //
 	// ### Commands ### //
 	// ################ //
 	
-	mod.command.add('enrage', (cmd) => {
-		if(cmd) {
+	mod.command.add('enrage', (param) => {
+		if(param == null) {
 			mod.settings.enabled = !mod.settings.enabled
 			mod.command.message(niceName + 'Enrage Notifier ' + (mod.settings.enabled ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
 			console.log('Enrage Notifier ' + (mod.settings.enabled ? 'enabled' : 'disabled'))
 		}
-		else if(cmd === "alert") {
+		else if(param === "alert" || param === "center") {
 			mod.settings.CENTER_ALERT = !mod.settings.CENTER_ALERT
 			mod.command.message(niceName + 'Center alerts ' + (mod.settings.CENTER_ALERT ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
 			console.log('[Enrage] Center alerts ' + (mod.settings.CENTER_ALERT ? 'enabled' : 'disabled'))
 		}
 		else mod.command.message('Commands:\n'
-							+ ' "enrage" (enable/disable EnrageNotifier),\n'
+							+ ' "enrage" (enable/disable Enrage Notifier),\n'
 							+ ' "enrage alert" (enable/disable alerts in the center of your screen)'
 			)
 	})

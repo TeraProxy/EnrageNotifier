@@ -2,9 +2,9 @@
 	"files": {
 		"LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
 		"README.md": "d3aa2da90d984e9556d6d7d36391aeacd5a5e7370c3cf0d0b361d065fb3b5c2b",
-		"index.js": "9a3b9afa7a3791ca8560c17733408acc71d36ec1e139d8069cdb1236e7fd14d8",
+		"index.js": "902bd7c7733ac358e02adb0ec1fdd2a500d463291dd7581b27592553a11d6bf9",
 		"module.json": "7d90b8c1611182ddc625af861efd33420a7efae737a6eb3944b59c58831b05cd",
-		"settings_migrator.js": "8e55be62f979eb2a5bd340b8f58543bcc9f4e51cd51faca20b60776716c2ed12"
+		"settings_migrator.js": "60b4cbd09f7412ea73ccf930ce46d9744a4629a73a798b844bfc888545814c13"
 	},
 	"defs": {
 		"S_BOSS_GAGE_INFO": 3,
