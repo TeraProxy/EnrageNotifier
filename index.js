@@ -69,7 +69,7 @@ module.exports = function EnrageNotifier(mod) {
 	}
 
 	function notifyChat(msg) {
-		mod.command.message(msg)
+		mod.command.message(niceName + msg)
 	}
 
 	// ################ //
