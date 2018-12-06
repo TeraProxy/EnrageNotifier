@@ -1,4 +1,4 @@
-// Version 1.1.7
+// Version 1.1.8
 
 module.exports = function EnrageNotifier(mod) {
 
@@ -30,7 +30,7 @@ module.exports = function EnrageNotifier(mod) {
 
 	mod.hook('S_BOSS_GAGE_INFO', 3, event => {
 		bosses.add(event.id.toString()) // work with strings so there's no chance JS screws up
-		hpPercent = Math.floor(event.curHp.toNumber() / event.maxHp.toNumber() * 100)
+		hpPercent = Math.floor(Number(event.curHp * 10000n / event.maxHp) / 100)
 		nextEnrage = (hpPercent > 10) ? (hpPercent - 10) : 0
 	})
 
@@ -40,13 +40,13 @@ module.exports = function EnrageNotifier(mod) {
 
 		if(event.enraged != wasEnraged) {
 			if(wasEnraged) {
-				let messageString = '<font color="#FFFFFF" size="25">Next Enrage at </font><font color="#FF0000" size="30">' + nextEnrage + '%</font>'
+				let messageString = '<font color="#FFFFFF" size="20">Next Enrage at </font><font color="#FF0000" size="20">' + nextEnrage + '%</font>'
 				if(nextEnrage > 0) {
 					if(mod.settings.CENTER_ALERT) notify(messageString)
 					notifyChat(messageString)
 				}
 			}
-			else if(mod.settings.CENTER_ALERT) notify('<font color="#FF0000" size="50">Boss Enraged!</font>')
+			else if(mod.settings.CENTER_ALERT) notify('<font color="#FF0000" size="20">Boss Enraged!</font>')
 			wasEnraged = !wasEnraged
 		}
 	})
@@ -61,9 +61,9 @@ module.exports = function EnrageNotifier(mod) {
 
 	function notify(msg) {
 		mod.toClient('S_DUNGEON_EVENT_MESSAGE', 2, {
-			type: 42, // 2,19-23,38-39,41-74,80-81 42=green 31=green shiny
-			chat: 1, // show in chat
-			channel: 18,
+			type: 31,
+			chat: false,
+			channel: 27,
 			message: msg
 		})
 	}
