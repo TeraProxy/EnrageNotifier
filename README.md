@@ -3,7 +3,7 @@ Should work on all regions as long as the opcodes are mapped. Works on Caali's a
 
 ##### :heavy_exclamation_mark: Installation :heavy_exclamation_mark:
 1) Download EnrageNotifier: https://github.com/TeraProxy/EnrageNotifier/archive/master.zip
-2) Extract the contents of the zip file into "\tera-proxy\bin\node_modules\"
+2) Extract the contents of the zip file into "\tera-proxy\mods\"
 3) Done! (the module will auto-update on Caali's proxy when a new version is released)
   
 Users of Pinkie's proxy also need to install tera-game-state: https://github.com/caali-hackerman/tera-game-state/archive/master.zip  
@@ -31,6 +31,8 @@ Whatever you send to the proxy chat in game is intercepted client-side. The chat
 ## Changelog
 <details>
 
+### 1.1.9
+* [~] Using default chat size now. Looks just better in new UI.
 ### 1.1.8
 * [*] Updated to work with BigInt
 ### 1.1.7

@@ -1,5 +1,3 @@
-// Version 1.1.8
-
 module.exports = function EnrageNotifier(mod) {
 
 	if(mod.proxyAuthor !== 'caali') {
@@ -40,13 +38,13 @@ module.exports = function EnrageNotifier(mod) {
 
 		if(event.enraged != wasEnraged) {
 			if(wasEnraged) {
-				let messageString = '<font color="#FFFFFF" size="20">Next Enrage at </font><font color="#FF0000" size="20">' + nextEnrage + '%</font>'
+				let messageString = '<font color="#FFFFFF">Next Enrage at </font><font color="#FF0000">' + nextEnrage + '%</font>'
 				if(nextEnrage > 0) {
 					if(mod.settings.CENTER_ALERT) notify(messageString)
 					notifyChat(messageString)
 				}
 			}
-			else if(mod.settings.CENTER_ALERT) notify('<font color="#FF0000" size="20">Boss Enraged!</font>')
+			else if(mod.settings.CENTER_ALERT) notify('<font color="#FF0000">Boss Enraged!</font>')
 			wasEnraged = !wasEnraged
 		}
 	})
