@@ -2,8 +2,12 @@
 	"files": {
 		"LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
 		"README.md": "d819371ef25412dfd9f8f6e0a102d97c549496ef680b26d8489972a75505d031",
+		"config.json": {
+			"overwrite": false,
+			"hash": "ccfdc21b2872f3304771880eef2d5681d5f14fbe68ee17f92a2c7a69b967e0af"
+		},
 		"index.js": "578a3197855f1fc35e4bfef9868c55312a9a948ce397625f32f24fba7ab502a7",
-		"module.json": "38c4829c53c63101c8a5d771a155db8464f189d5d20444cf1b47c5fba8a73236",
+		"module.json": "58cadfa661a4d9684f5c9054dba2d4da361a99d16214730504f29953b0fb6e2d",
 		"settings_migrator.js": "60b4cbd09f7412ea73ccf930ce46d9744a4629a73a798b844bfc888545814c13"
 	},
 	"defs": {
