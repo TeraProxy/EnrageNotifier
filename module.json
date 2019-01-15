@@ -2,13 +2,13 @@
     "disableAutoUpdate": false,
     "name": "Enrage Notifier",
     "author": "TeraProxy",
-    "description": "A tera-proxy module that sends you a notice about a boss being enraged and the percentage of its next enrage.",
-    "version": "1.1.9",
+    "description": "Sends you a notice about a boss being enraged and the percentage of its next enrage.",
+    "version": "1.2.0",
     "donationUrl": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=A3KBZUCSEQ5RJ",
     "options": {
         "niceName": "Enrage",
         "guiName": "Enrage Notifier",
-        "settingsVersion": 1,
+        "settingsVersion": 2,
         "settingsFile": "config.json",
         "settingsMigrator": "settings_migrator.js"
     },

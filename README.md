@@ -22,6 +22,7 @@ The following commands are supported:
   
 * enrage - enable/disable EnrageNotifier  
 * enrage alert - enable/disable alerts in the center of your screen  
+* enrage time - enable/disable logging of enrage time to chat  
   
 Any other input, starting with "enrage", will return a summary of above commands in the chat.
 
@@ -31,6 +32,9 @@ Whatever you send to the proxy chat in game is intercepted client-side. The chat
 ## Changelog
 <details>
 
+### 1.2.0
+* [*] Updated hooks for patch 79
+* [+] Added "SHOW_ENRAGE_TIME" option and "time" command
 ### 1.1.9
 * [~] Using default chat size now. Looks just better in new UI.
 ### 1.1.8

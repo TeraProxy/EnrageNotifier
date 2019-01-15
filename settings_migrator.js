@@ -3,6 +3,7 @@
 const DefaultSettings = {
     "enabled": true,
     "CENTER_ALERT": true
+    "SHOW_ENRAGE_TIME": false
 }
 
 module.exports = function MigrateSettings(from_ver, to_ver, settings) {

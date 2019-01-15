@@ -1,19 +1,19 @@
 {
-	"files": {
-		"LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
-		"README.md": "d819371ef25412dfd9f8f6e0a102d97c549496ef680b26d8489972a75505d031",
-		"config.json": {
-			"overwrite": false,
-			"hash": "ccfdc21b2872f3304771880eef2d5681d5f14fbe68ee17f92a2c7a69b967e0af"
-		},
-		"index.js": "578a3197855f1fc35e4bfef9868c55312a9a948ce397625f32f24fba7ab502a7",
-		"module.json": "58cadfa661a4d9684f5c9054dba2d4da361a99d16214730504f29953b0fb6e2d",
-		"settings_migrator.js": "60b4cbd09f7412ea73ccf930ce46d9744a4629a73a798b844bfc888545814c13"
-	},
-	"defs": {
-		"S_BOSS_GAGE_INFO": 3,
-		"S_DESPAWN_NPC": 3,
-		"S_DUNGEON_EVENT_MESSAGE": 2,
-		"S_NPC_STATUS": 1
-	}
+    "files": {
+        "LICENSE": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+        "README.md": "104d738005aefc8869048ebc91d77b48990c49292841ae4a1437fcba33279286",
+        "config.json": {
+            "overwrite": false,
+            "hash": "5d752f32ec20e1f88b2be184f6f738ee84e72e982b231ef25b1bf3b9e71cdda9"
+        },
+        "index.js": "9df2311da88cb0659277403e47493a461f8d70a43d22024463d52a3129c0edcc",
+        "module.json": "13e0ef6df3833eee55df438a7db28516beb139b866b9f10cd27dc0bcf259b6a9",
+        "settings_migrator.js": "56bcdfda7e12d68acafe8f2e725c57b2b36a1e562398a7bc8d9252661cc278bd"
+    },
+    "defs": {
+        "S_BOSS_GAGE_INFO": 3,
+        "S_DESPAWN_NPC": 3,
+        "S_DUNGEON_EVENT_MESSAGE": 2,
+        "S_SPAWN_NPC": 11
+    }
 }
