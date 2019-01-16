@@ -46,7 +46,7 @@ module.exports = function EnrageNotifier(mod) {
 	})
 
 	mod.hook('S_DESPAWN_NPC', 3, event => {
-		if(bosses.delete(event.gameId.toString())) wasEnraged = false
+		if(bosses.delete(event.gameId.toString())) enraged = 0
 	})
 
 	// ################# //
