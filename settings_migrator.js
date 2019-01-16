@@ -2,7 +2,7 @@
 
 const DefaultSettings = {
     "enabled": true,
-    "CENTER_ALERT": true
+    "CENTER_ALERT": true,
     "SHOW_ENRAGE_TIME": false
 }
 
