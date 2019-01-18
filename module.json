@@ -3,7 +3,7 @@
     "name": "Enrage Notifier",
     "author": "TeraProxy",
     "description": "Sends you a notice about a boss being enraged and the percentage of its next enrage.",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "donationUrl": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=A3KBZUCSEQ5RJ",
     "options": {
         "niceName": "Enrage",

@@ -6,14 +6,14 @@
             "overwrite": false,
             "hash": "b6fa5534a7e90c0930c9b248e708cec775166cfabca4f6166033f67be9501ae7"
         },
-        "index.js": "a0321f3cc9b8768e3f44082933929a891da133635a42216dc2a368b23031ffdc",
-        "module.json": "ed7f0ffacb3c0a5aa3b7d72edac80a039e9674bfc848385e14fe1d922b34ad86",
+        "index.js": "8c24b4ede7ca7919f6dc587ce56848308599672744fc40f009603796d27284ed",
+        "module.json": "4aa9ffd1a4521ffdb0a795042120738bd7ab355b5c7009e0545ca053f888b27a",
         "settings_migrator.js": "504de94c96c1c69d0f8093cf908f2545b6d107e7446e3790b8a60bc5a4282aa2"
     },
     "defs": {
         "S_BOSS_GAGE_INFO": 3,
         "S_DESPAWN_NPC": 3,
         "S_DUNGEON_EVENT_MESSAGE": 2,
-        "S_NPC_STATUS": 2
+        "S_NPC_STATUS": [1,2]
     }
 }

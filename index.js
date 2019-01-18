@@ -23,28 +23,52 @@ module.exports = function EnrageNotifier(mod) {
 		nextEnrage = (hpPercent > 10) ? (hpPercent - 10) : 0
 	})
 
-	mod.hook('S_NPC_STATUS', 2, event => {
-		if(!mod.settings.enabled || inHH) return
-		if(!bosses.has(event.gameId.toString())) return
+	mod.hook('S_NPC_STATUS', mod.majorPatchVersion >= 79 ? 2:1, event => {
+		if(mod.majorPatchVersion >= 79) {
+			if(!mod.settings.enabled || inHH) return
+			if(!bosses.has(event.creature.toString())) return
 
-		let remainingEnrageTime = event.remainingEnrageTime / 1000
+			if(event.enraged != enraged) {
+				if(enraged == true) {
+					let messageString = '<font color="#FFFFFF">Next Enrage at </font><font color="#FF0000">' + nextEnrage + '%</font>'
 
-		if(event.enraged != enraged) {
-			if(enraged == true) {
-				let messageString = '<font color="#FFFFFF">Next Enrage at </font><font color="#FF0000">' + nextEnrage + '%</font>'
+					if(nextEnrage > 0) {
+						if(mod.settings.CENTER_ALERT) notify(messageString)
+						if(mod.settings.LOG) notifyChat(messageString)
+					}
+				}
+				else {
+					let messageString = '<font color="#FF0000">Boss Enraged!</font>'
 
-				if(nextEnrage > 0) {
 					if(mod.settings.CENTER_ALERT) notify(messageString)
 					if(mod.settings.LOG) notifyChat(messageString)
 				}
+				enraged = !enraged
 			}
-			else {
-				let messageString = '<font color="#FF0000">Boss Enraged for </font><font color="#FFFFFF">' + remainingEnrageTime + ' seconds</font>'
+		}
+		else {
+			if(!mod.settings.enabled || inHH) return
+			if(!bosses.has(event.gameId.toString())) return
 
-				if(mod.settings.CENTER_ALERT) notify(messageString)
-				if(mod.settings.LOG) notifyChat(messageString)
+			let remainingEnrageTime = event.remainingEnrageTime / 1000
+
+			if(event.enraged != enraged) {
+				if(enraged == true) {
+					let messageString = '<font color="#FFFFFF">Next Enrage at </font><font color="#FF0000">' + nextEnrage + '%</font>'
+
+					if(nextEnrage > 0) {
+						if(mod.settings.CENTER_ALERT) notify(messageString)
+						if(mod.settings.LOG) notifyChat(messageString)
+					}
+				}
+				else {
+					let messageString = '<font color="#FF0000">Boss Enraged for </font><font color="#FFFFFF">' + remainingEnrageTime + ' seconds</font>'
+
+					if(mod.settings.CENTER_ALERT) notify(messageString)
+					if(mod.settings.LOG) notifyChat(messageString)
+				}
+				enraged = !enraged
 			}
-			enraged = !enraged
 		}
 	})
 
