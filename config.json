@@ -1,8 +1,8 @@
 {
-    "version": 2,
+    "version": 3,
     "data": {
         "enabled": true,
         "CENTER_ALERT": true,
-        "SHOW_ENRAGE_TIME": false
+        "LOG": true
     }
 }

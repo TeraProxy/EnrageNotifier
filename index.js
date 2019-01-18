@@ -5,7 +5,7 @@ module.exports = function EnrageNotifier(mod) {
 	let hpPercent,
 		nextEnrage,
 		inHH = false,
-		enraged = 0,
+		enraged = false,
 		bosses = new Set(),
 		niceName = mod.proxyAuthor !== 'caali' ? '[Enrage] ' : ''
 
@@ -23,30 +23,33 @@ module.exports = function EnrageNotifier(mod) {
 		nextEnrage = (hpPercent > 10) ? (hpPercent - 10) : 0
 	})
 
-	mod.hook('S_SPAWN_NPC', 11, event => {
+	mod.hook('S_NPC_STATUS', 2, event => {
 		if(!mod.settings.enabled || inHH) return
 		if(!bosses.has(event.gameId.toString())) return
 
 		let remainingEnrageTime = event.remainingEnrageTime / 1000
 
-		if(event.mode != enraged) {
-			if(enraged == 1) {
+		if(event.enraged != enraged) {
+			if(enraged == true) {
 				let messageString = '<font color="#FFFFFF">Next Enrage at </font><font color="#FF0000">' + nextEnrage + '%</font>'
+
 				if(nextEnrage > 0) {
 					if(mod.settings.CENTER_ALERT) notify(messageString)
-					notifyChat(messageString)
+					if(mod.settings.LOG) notifyChat(messageString)
 				}
 			}
 			else {
-				if(mod.settings.CENTER_ALERT) notify('<font color="#FF0000">Boss Enraged!</font>')
-				if(mod.settings.SHOW_ENRAGE_TIME) notifyChat('<font color="#FF0000">Boss Enraged for </font><font color="#FFFFFF">' + remainingEnrageTime + ' seconds</font>')
+				let messageString = '<font color="#FF0000">Boss Enraged for </font><font color="#FFFFFF">' + remainingEnrageTime + ' seconds</font>'
+
+				if(mod.settings.CENTER_ALERT) notify(messageString)
+				if(mod.settings.LOG) notifyChat(messageString)
 			}
-			enraged = enraged == 1 ? 0 : 1
+			enraged = !enraged
 		}
 	})
 
 	mod.hook('S_DESPAWN_NPC', 3, event => {
-		if(bosses.delete(event.gameId.toString())) enraged = 0
+		if(bosses.delete(event.gameId.toString())) enraged = false
 	})
 
 	// ################# //
@@ -81,15 +84,15 @@ module.exports = function EnrageNotifier(mod) {
 			mod.command.message(niceName + 'Center alerts ' + (mod.settings.CENTER_ALERT ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
 			console.log('[Enrage] Center alerts ' + (mod.settings.CENTER_ALERT ? 'enabled' : 'disabled'))
 		}
-		else if(param === "time" || param === "timer") {
-			mod.settings.SHOW_ENRAGE_TIME = !mod.settings.SHOW_ENRAGE_TIME
-			mod.command.message(niceName + 'Show enrage time ' + (mod.settings.SHOW_ENRAGE_TIME ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
-			console.log('[Enrage] Show enrage time ' + (mod.settings.SHOW_ENRAGE_TIME ? 'enabled' : 'disabled'))
+		else if(param === "log") {
+			mod.settings.LOG = !mod.settings.LOG
+			mod.command.message(niceName + 'Logging ' + (mod.settings.LOG ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
+			console.log('[Enrage] Logging ' + (mod.settings.LOG ? 'enabled' : 'disabled'))
 		}
 		else mod.command.message('Commands:\n'
 							+ ' "enrage" (enable/disable Enrage Notifier),\n'
 							+ ' "enrage alert" (enable/disable alerts in the center of your screen),\n'
-							+ ' "enrage time" (enable/disable logging of enrage time to chat)'
+							+ ' "enrage log" (enable/disable logging of notices to proxy chat)'
 			)
 	})
 }
