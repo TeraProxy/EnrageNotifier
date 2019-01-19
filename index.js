@@ -24,7 +24,7 @@ module.exports = function EnrageNotifier(mod) {
 	})
 
 	mod.hook('S_NPC_STATUS', mod.majorPatchVersion >= 79 ? 2:1, event => {
-		if(mod.majorPatchVersion >= 79) {
+		if(mod.majorPatchVersion < 79) {
 			if(!mod.settings.enabled || inHH) return
 			if(!bosses.has(event.creature.toString())) return
 
